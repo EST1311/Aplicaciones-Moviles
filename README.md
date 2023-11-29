@@ -1,5 +1,6 @@
 # Aplicaciones-Moviles
-YOLO
+Credenciales:
+
+eduardosalazartrejo@gmail.com  
 
 
-Repositorio para llorar
