@@ -1,0 +1,11 @@
+{
+    "usuarios":[
+        {"nombre" : "Eduardo Salazar Trejo", "correo" : "eduardosalazartrejo@gmail.com", "nacimiento" : "13/11/2001"},
+        {"nombre" : "Estefania Saucedo Tamayo", "correo" : "estefania@gmail.com", "nacimiento" : "11/10/2001"}
+    ],
+
+    "producto" :[
+        {"cantidad" : 9000}
+    ]
+    
+}
