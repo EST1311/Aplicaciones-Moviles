@@ -1,12 +1,6 @@
 const correo = "eduardosalazartrejo@gmail.com";
 const contrasena = "test123";
 
-$(document).ready( function(){
-    console.log('Inicio el documento');
-    consultaUbicacion();    
-    inicializar();
-})
-
 function sendMessage(){
 
     let username_1 = document.getElementById("username");
@@ -138,3 +132,105 @@ function showHeb(){
     supermercado.style.display = "none"
     heb_homepage.style.display = 'block'; 
 }
+
+function toggleFabModal() {
+    $('#fabModal').modal('toggle');
+    $('#addProductModal').modal('hide');
+    $('#deleteProductModal').modal('hide');
+}
+
+/* function acceso(){
+
+    let username_1 = document.getElementById("username");
+    let password_1 = document.getElementById("password");
+    let inicio = document.getElementById("inicio");
+    let home = document.getElementById("home");
+    let supermercado = document.getElementById("supermercado");
+    var user = $('#username').val();
+    var pass = $('#password').val();
+
+    const datafunction = {
+        function: "login",
+        user: user,
+        password: pass
+    }
+
+    $.ajax({
+        url: "http://172.28.75.121/AM-API/market/controller.php",
+        method: 'POST',
+        data: datafunction,
+        encode:true,
+        dataType: "json",
+        success: function (response) {
+            if (response.valid) {
+                Swal.fire({
+                    title: "Acceso a Aplicación",
+                    text: "Tus credenciales son válidas",
+                    icon: "success",
+                    allowOutsideClick: false
+                });
+                inicio.style.display = 'none';
+                home.style.display = 'block';
+            } else {
+                alert("Credenciales incorrectas, intenta de nuevo");
+            }
+        },
+        error: function () {
+            inicio.style.display = 'none';
+            home.style.display = 'block';
+        }
+    });
+}
+
+function listSupermarkets(){
+
+    const datafunction = {
+        function: "listamercados"
+    }
+
+    $.ajax({
+        url: "http://172.28.75.121/AM-API/market/controller.php",
+        method: 'POST',
+        data: datafunction,
+        encode:true,
+        dataType: "json",
+      success: function (response) {
+        if (response.valid) {
+          displaySupermarkets(response.data);
+        } else {
+        alert("Supermercado invalido");
+        }
+      },
+      error: function(){
+        console.error("API Request Error");
+      },
+    });
+}
+
+function listProducts(){
+
+    var market = $('#supermarket').val();
+
+    const datafunction = {
+        function: "listaProductos",
+        id: market,
+    }
+
+    $.ajax({
+        url: "http://172.28.75.121/AM-API/market/controller.php",
+        method: 'POST',
+        data: datafunction,
+        encode:true,
+        dataType: "json",
+      success: function (response) {
+        if (response.valid) {
+          displayProducts(response.data);
+        } else {
+        alert("Supermercado invalido");
+        }
+      },
+      error: function(){
+        console.error("API Request Error");
+      },
+    });
+} */
