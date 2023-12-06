@@ -1,337 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>SuperShop List Pro</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
 </head>
+
 <body>
     <style type="text/css">
-        body{background: #a1b0ab !important;}
-        </style>
-<div id="inicio">
-    <div class="container">
-        <div class="row justify-content-center mt-5">
-            <div class="col-md-6">
-                <div class="text-center">
-                    <img src="Logo1.png" alt="Logo" class="img-fluid mb-4">
-                </div>
-                <form>
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Ingresa tu usuario" id="username">
+        body {
+            background: #a1b0ab !important;
+        }
+    </style>
+
+    <div id="inicio">
+        <div class="container">
+            <div class="row justify-content-center mt-5">
+                <div class="col-md-6">
+                    <div class="text-center">
+                        <img src="Logo1.png" alt="Logo" class="img-fluid mb-4">
                     </div>
-                    <div class="form-group">
-                        <input type="password" class="form-control" placeholder="Ingresa tu contraseña" id="password">
-                    </div>
-                    <button type="button" class="btn btn-primary btn-block" onclick="sendMessage()">Inicia Sesión</button>
-                </form>
-            </div>
-        </div>
-    </div>
-    <div class="video-warp">
-        <video id="transmision" playsinline autoplay></video>
-        <button id="capt">
-            Tomar Captura
-        </button>
-        <canvas id="captura" width="740" height="500"></canvas>
-    </div>
-</div>
-
-<div id="home" style="display: none;">
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link text-left" href="#" onclick="showHome()">Inicio</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-left" onclick="showSupermercados()" href="#" >Supermercados</a>
-            </li>
-        </ul>
-    </div>
-</nav>
-
-<!-- Content Container -->
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="text-center">
-                <img src="Logo1.png" alt="Logo" class="img-fluid mb-4">
-        </div>
-    </div>
-</div>
-
-    <!-- Tables for Supermarkets -->
-    <div class="row mt-4">
-        <div class="col">
-            <table class="table table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="text-center">Costco</td>
-                    </tr>
-                    <tr>
-                        <td class="text-center">Lista de Productos</td>
-                    </tr>
-                    <tr>
-                        <td><!-- Function to display products for Costco --></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="col">
-            <table class="table table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="text-center">Sam's Club</td>
-                    </tr>
-                    <tr>
-                        <td class="text-center">Lista de Productos</td>
-                    </tr>
-                    <tr>
-                        <td><!-- Function to display products for Sam's Club --></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <div class="row mt-4">
-        <div class="col">
-            <table class="table table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="text-center">Walmart</td>
-                    </tr>
-                    <tr>
-                        <td class="text-center">Lista de Productos</td>
-                    </tr>
-                    <tr>
-                        <td><!-- Function to display products for Walmart --></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div class="col">
-            <table class="table table-bordered">
-                <tbody>
-                    <tr>
-                        <td class="text-center">H-E-B</td>
-                    </tr>
-                    <tr>
-                        <td class="text-center">Lista de Productos</td>
-                    </tr>
-                    <tr>
-                        <td><!-- Function to display products for H-E-B --></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
-<!-- Floating Action Button -->
-<button class="btn btn-primary rounded-circle position-fixed" style="bottom: 20px; right: 20px;" onclick="toggleFabModal()">+</button>
-
-<!-- Modal for Floating Action Button Options -->
-<div class="modal fade" id="fabModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-body">
-                <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#addProductModal">Añadir Producto</button>
-                <button class="btn btn-danger btn-block" data-toggle="modal" data-target="#deleteProductModal">Eliminar Producto</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal for Add Product -->
-<div class="modal fade" id="addProductModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Añadir Producto</h5>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="supermarket">Supermercado</label>
-                        <select class="form-control" id="supermarket">
-                            <option>Costco</option>
-                            <option>Sam's Club</option>
-                            <option>Walmart</option>
-                            <option>H-E-B</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="product">Producto</label>
-                        <input type="text" class="form-control" id="product">
-                    </div>
-                    <button type="button" class="btn btn-success btn-block">Agregar Producto</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal for Delete Product -->
-<div class="modal fade" id="deleteProductModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Eliminar Producto</h5>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="supermarketDelete">Supermercado</label>
-                        <select class="form-control" id="supermarketDelete">
-                            <option>Costco</option>
-                            <option>Sam's Club</option>
-                            <option>Walmart</option>
-                            <option>H-E-B</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="productDelete">Producto</label>
-                        <select class="form-control" id="productDelete">
-                            <option>Product A</option>
-                            <option>Product B</option>
-                            <option>Product C</option>
-                        </select>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <button type="button" class="btn btn-danger btn-block">Eliminar</button>
+                    <form>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Ingresa tu usuario" id="username">
                         </div>
-                        <div class="col">
-                            <button type="button" class="btn btn-success btn-block">Salir</button>
+                        <div class="form-group">
+                            <input type="password" class="form-control" placeholder="Ingresa tu contraseña" id="password">
                         </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-
-<!-- Modal for Side Menu -->
-<div class="modal fade" id="menuModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-body">
-                <ul>
-                    <li><a href="#" onclick="showHome()">Inicio</a></li>
-                    <li><a href="#" onclick="showSupermercados()">Supermercados</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-
-<div id="supermercado" style="display: none;">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link text-left" href="#" onclick="showHome()">Inicio</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-left" href="#" onclick="showSupermercados()">Supermercados</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    
-    <!-- Content Container -->
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="text-center">
-                    <img src="Logo1.png" alt="Logo" class="img-fluid mb-4">
-            </div>
-        </div>
-    </div>
-    
-        <!-- Tables for Supermarkets -->
-        <div class="row mt-4">
-            <div class="col-md-6">
-                <table class="table table-bordered">
-                    <tbody>
-                        <tr>
-                            <div class="text-center">
-                                <td><img src="Costco.png" onclick="showCostco()" class="img-fluid mb-4"></td>
-                            </div>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-md-6">
-                <table class="table table-bordered">
-                    <tbody>
-                        <tr>
-                            <div class="text-center">
-                                <td><img src="Sams.png" onclick="showSams()" class="img-fluid mb-4"></td>
-                            </div>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    
-        <div class="row mt-4">
-            <div class="col-md-6">
-                <table class="table table-bordered">
-                    <tbody>
-                        <tr>
-                            <div class="text-center">
-                                <td><img src="Walmart.png" onclick="showWalmart()" class="img-fluid mb-4"></td>
-                            </div>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="col-md-6">
-                <table class="table table-bordered">
-                    <tbody>
-                        <tr>
-                            <div class="text-center">
-                                <td><img src="Heb.png" onclick="showHeb()" class="img-fluid mb-4"></td>
-                            </div>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Modal for Side Menu -->
-    <div class="modal fade" id="menuModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <ul>
-                        <li><a href="#" onclick="showHome()">Inicio</a></li>
-                        <li><a href="#" onclick="showSupermercados()">Supermercados</a></li>
-                    </ul>
+                        <button type="button" class="btn btn-primary btn-block" onclick="sendMessage()">Inicia Sesión</button>
+                        <!-- <button type="button" class="btn btn-primary btn-block" onclick="acceso()">Inicia Sesión</button> -->
+                    </form>
                 </div>
             </div>
         </div>
     </div>
-    </div>
 
-    <div id="costco_homepage" style="display: none;">
+    <div id="home" style="display: none;">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
                 <span class="navbar-toggler-icon"></span>
@@ -342,22 +50,22 @@
                         <a class="nav-link text-left" href="#" onclick="showHome()">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-left" onclick="showSupermercados()" href="#" >Supermercados</a>
+                        <a class="nav-link text-left" onclick="showSupermercados()" href="#">Supermercados</a>
                     </li>
                 </ul>
             </div>
         </nav>
-        
+
         <!-- Content Container -->
         <div class="container mt-5">
             <div class="row justify-content-center">
                 <div class="col-md-6">
                     <div class="text-center">
-                        <img src="Costco.png" alt="Logo" class="img-fluid mb-4">
+                        <img src="Logo1.png" alt="Logo" class="img-fluid mb-4">
+                    </div>
                 </div>
             </div>
-        </div>
-        
+
             <!-- Tables for Supermarkets -->
             <div class="row mt-4">
                 <div class="col">
@@ -370,100 +78,243 @@
                                 <td class="text-center">Lista de Productos</td>
                             </tr>
                             <tr>
-                                <td><!-- Function to display products for Costco --></td>
+                                <td>                        
+                                    <ul id="productList">
+                                        <script>
+                                            function populateTable(jsonResponse) {
+                                        
+                                                $('#tableBody tr:nth-child(1) td').text(jsonResponse.supermarket);
+                                        
+                                            
+                                                $('#tableBody tr:nth-child(2) td').text("Lista de Productos");
+                                        
+                                            
+                                                $('#productList').empty();
+                                        
+                                                
+                                                jsonResponse.productList.forEach(function(product) {
+                                                    $('#productList').append('<li>' + product + '</li>');
+                                                });
+                                            }
+                                            populateTable(jsonResponse);
+                                        </script>
+                                        
+                                    </ul>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
+                <div class="col">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="text-center">Sam's Club</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">Lista de Productos</td>
+                            </tr>
+                            <tr>
+                                <td>                        
+                                    <ul id="productList">
+                                        <script>
+                                            function populateTable(jsonResponse) {
+                                        
+                                                $('#tableBody tr:nth-child(1) td').text(jsonResponse.supermarket);
+                                        
+                                            
+                                                $('#tableBody tr:nth-child(2) td').text("Lista de Productos");
+                                        
+                                            
+                                                $('#productList').empty();
+                                        
+                                                
+                                                jsonResponse.productList.forEach(function(product) {
+                                                    $('#productList').append('<li>' + product + '</li>');
+                                                });
+                                            }
+                                            populateTable(jsonResponse);
+                                        </script>
+                                        
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
-        
+            <div class="row mt-4">
+                <div class="col">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="text-center">Walmart</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">Lista de Productos</td>
+                            </tr>
+                            <tr>
+                                <td>                        
+                                    <ul id="productList">
+                                        <script>
+                                            function populateTable(jsonResponse) {
+                                        
+                                                $('#tableBody tr:nth-child(1) td').text(jsonResponse.supermarket);
+                                        
+                                            
+                                                $('#tableBody tr:nth-child(2) td').text("Lista de Productos");
+                                        
+                                            
+                                                $('#productList').empty();
+                                        
+                                                
+                                                jsonResponse.productList.forEach(function(product) {
+                                                    $('#productList').append('<li>' + product + '</li>');
+                                                });
+                                            }
+                                            populateTable(jsonResponse);
+                                        </script>
+                                        
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="text-center">H-E-B</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">Lista de Productos</td>
+                            </tr>
+                            <tr>
+                                <td>                        
+                                    <ul id="productList">
+                                        <script>
+                                            function populateTable(jsonResponse) {
+                                        
+                                                $('#tableBody tr:nth-child(1) td').text(jsonResponse.supermarket);
+                                        
+                                            
+                                                $('#tableBody tr:nth-child(2) td').text("Lista de Productos");
+                                        
+                                            
+                                                $('#productList').empty();
+                                        
+                                                
+                                                jsonResponse.productList.forEach(function(product) {
+                                                    $('#productList').append('<li>' + product + '</li>');
+                                                });
+                                            }
+                                            populateTable(jsonResponse);
+                                        </script>
+                                        
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
         <!-- Floating Action Button -->
-<button class="btn btn-primary rounded-circle position-fixed" style="bottom: 20px; right: 20px;" onclick="toggleFabModal()">+</button>
+        <button class="btn btn-primary rounded-circle position-fixed" style="bottom: 20px; right: 20px;"
+            onclick="toggleFabModal()">+</button>
 
-<!-- Modal for Floating Action Button Options -->
-<div class="modal fade" id="fabModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-body">
-                <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#addProductModal">Añadir Producto</button>
-                <button class="btn btn-danger btn-block" data-toggle="modal" data-target="#deleteProductModal">Eliminar Producto</button>
+        <!-- Modal for Floating Action Button Options -->
+        <div class="modal fade" id="fabModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <button class="btn btn-primary btn-block" data-toggle="modal"
+                            data-target="#addProductModal">Añadir Producto</button>
+                        <button class="btn btn-danger btn-block" data-toggle="modal"
+                            data-target="#deleteProductModal">Eliminar Producto</button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
 
-<!-- Modal for Add Product -->
-<div class="modal fade" id="addProductModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Añadir Producto</h5>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="supermarket">Supermercado</label>
-                        <select class="form-control" id="supermarket">
-                            <option>Costco</option>
-                            <option>Sam's Club</option>
-                            <option>Walmart</option>
-                            <option>H-E-B</option>
-                        </select>
+        <!-- Modal for Add Product -->
+        <div class="modal fade" id="addProductModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Añadir Producto</h5>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
-                    <div class="form-group">
-                        <label for="product">Producto</label>
-                        <input type="text" class="form-control" id="product">
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="supermarket">Supermercado</label>
+                                <!-- <button type="button" id="supermarket" onclick="listSupermarkets()"></button> -->
+                                <select class="form-control" id="supermarket">
+                                    <option>Costco</option>
+                                    <option>Sam's Club</option>
+                                    <option>Walmart</option>
+                                    <option>H-E-B</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="product">Producto</label>
+                                <input type="text" class="form-control" id="product">
+                            </div>
+                            <button type="button" class="btn btn-success btn-block">Agregar Producto</button> 
+                        </form>
                     </div>
-                    <button type="button" class="btn btn-success btn-block">Agregar Producto</button>
-                </form>
+                </div>
             </div>
         </div>
-    </div>
-</div>
 
-<!-- Modal for Delete Product -->
-<div class="modal fade" id="deleteProductModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Eliminar Producto</h5>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="supermarketDelete">Supermercado</label>
-                        <select class="form-control" id="supermarketDelete">
-                            <option>Costco</option>
-                            <option>Sam's Club</option>
-                            <option>Walmart</option>
-                            <option>H-E-B</option>
-                        </select>
+        <!-- Modal for Delete Product -->
+        <div class="modal fade" id="deleteProductModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Eliminar Producto</h5>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
-                    <div class="form-group">
-                        <label for="productDelete">Producto</label>
-                        <select class="form-control" id="productDelete">
-                            <option>Product A</option>
-                            <option>Product B</option>
-                            <option>Product C</option>
-                        </select>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+
+                                <label for="supermarketDelete">Supermercado</label>
+                                <select class="form-control" id="supermarketDelete">
+                                    <option>Costco</option>
+                                    <option>Sam's Club</option>
+                                    <option>Walmart</option>
+                                    <option>H-E-B</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="productDelete">Producto</label>
+                                <!-- <button type="button" id="product" onclick="listProducts()"></button> -->
+                                <select class="form-control" id="productDelete">
+                                    <option>Manzana</option>
+                                    <option>Jabon</option>
+                                    <option>Jamon</option>
+                                    <option>Pan</option>
+                                </select>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <button type="button" class="btn btn-danger btn-block">Eliminar</button>
+                                </div>
+                                <div class="col">
+                                    <button type="button" class="btn btn-success btn-block">Salir</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                    <div class="row">
-                        <div class="col">
-                            <button type="button" class="btn btn-danger btn-block">Eliminar</button>
-                        </div>
-                        <div class="col">
-                            <button type="button" class="btn btn-success btn-block">Salir</button>
-                        </div>
-                    </div>
-                </form>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-</div>
-        
+
         <!-- Modal for Side Menu -->
         <div class="modal fade" id="menuModal">
             <div class="modal-dialog">
@@ -477,145 +328,262 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div id="supermercado" style="display: none;">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link text-left" href="#" onclick="showHome()">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-left" href="#" onclick="showSupermercados()">Supermercados</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    
+        <!-- Content Container -->
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="text-center">
+                        <img src="Logo1.png" alt="Logo" class="img-fluid mb-4">
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Tables for Supermarkets -->
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <div class="text-center">
+                                    <td><img src="Costco.png" onclick="showCostco()" class="img-fluid mb-4"></td>
+                                </div>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-6">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <div class="text-center">
+                                    <td><img src="Sams.png" onclick="showSams()" class="img-fluid mb-4"></td>
+                                </div>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+    
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <div class="text-center">
+                                    <td><img src="Walmart.png" onclick="showWalmart()" class="img-fluid mb-4"></td>
+                                </div>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-6">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <div class="text-center">
+                                    <td><img src="Heb.png" onclick="showHeb()" class="img-fluid mb-4"></td>
+                                </div>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Modal for Side Menu -->
+        <div class="modal fade" id="menuModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <ul>
+                            <li><a href="#" onclick="showHome()">Inicio</a></li>
+                            <li><a href="#" onclick="showSupermercados()">Supermercados</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-
-        <div id="sams_homepage" style="display: none;">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link text-left" href="#" onclick="showHome()">Inicio</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-left" onclick="showSupermercados()" href="#" >Supermercados</a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-            
-            <!-- Content Container -->
-            <div class="container mt-5">
-                <div class="row justify-content-center">
-                    <div class="col-md-6">
-                        <div class="text-center">
-                            <img src="Sams.png" alt="Logo" class="img-fluid mb-4">
+    
+    <div id="costco_homepage" style="display: none;">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link text-left" href="#" onclick="showHome()">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-left" onclick="showSupermercados()" href="#">Supermercados</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        
+        <!-- Content Container -->
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="text-center">
+                        <img src="Costco.png" alt="Logo" class="img-fluid mb-4">
                     </div>
                 </div>
             </div>
             
-                <!-- Tables for Supermarkets -->
-                <div class="row mt-4">
-                    <div class="col">
-                        <table class="table table-bordered">
-                            <tbody>
-                                <tr>
-                                    <td class="text-center">Sams</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center">Lista de Productos</td>
-                                </tr>
-                                <tr>
-                                    <td><!-- Function to display products for Costco --></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-            
-            
-            
-            
+            <!-- Tables for Supermarkets -->
+            <div class="row mt-4">
+                <div class="col">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="text-center">Costco</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">Lista de Productos</td>
+                            </tr>
+                            <tr>
+                                <td>                        
+                                    <ul id="productList">
+                                        <script>
+                                            function populateTable(jsonResponse) {
+                                        
+                                                $('#tableBody tr:nth-child(1) td').text(jsonResponse.supermarket);
+                                        
+                                            
+                                                $('#tableBody tr:nth-child(2) td').text("Lista de Productos");
+                                        
+                                            
+                                                $('#productList').empty();
+                                        
+                                                
+                                                jsonResponse.productList.forEach(function(product) {
+                                                    $('#productList').append('<li>' + product + '</li>');
+                                                });
+                                            }
+                                            populateTable(jsonResponse);
+                                        </script>
+                                        
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+    
             <!-- Floating Action Button -->
-<button class="btn btn-primary rounded-circle position-fixed" style="bottom: 20px; right: 20px;" onclick="toggleFabModal()">+</button>
-
-<!-- Modal for Floating Action Button Options -->
-<div class="modal fade" id="fabModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-body">
-                <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#addProductModal">Añadir Producto</button>
-                <button class="btn btn-danger btn-block" data-toggle="modal" data-target="#deleteProductModal">Eliminar Producto</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal for Add Product -->
-<div class="modal fade" id="addProductModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Añadir Producto</h5>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="supermarket">Supermercado</label>
-                        <select class="form-control" id="supermarket">
-                            <option>Costco</option>
-                            <option>Sam's Club</option>
-                            <option>Walmart</option>
-                            <option>H-E-B</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="product">Producto</label>
-                        <input type="text" class="form-control" id="product">
-                    </div>
-                    <button type="button" class="btn btn-success btn-block">Agregar Producto</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal for Delete Product -->
-<div class="modal fade" id="deleteProductModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Eliminar Producto</h5>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="supermarketDelete">Supermercado</label>
-                        <select class="form-control" id="supermarketDelete">
-                            <option>Costco</option>
-                            <option>Sam's Club</option>
-                            <option>Walmart</option>
-                            <option>H-E-B</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="productDelete">Producto</label>
-                        <select class="form-control" id="productDelete">
-                            <option>Product A</option>
-                            <option>Product B</option>
-                            <option>Product C</option>
-                        </select>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <button type="button" class="btn btn-danger btn-block">Eliminar</button>
-                        </div>
-                        <div class="col">
-                            <button type="button" class="btn btn-success btn-block">Salir</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
+            <button class="btn btn-primary rounded-circle position-fixed" style="bottom: 20px; right: 20px;"
+                onclick="toggleFabModal()">+</button>
             
+            <!-- Modal for Floating Action Button Options -->
+            <div class="modal fade" id="fabModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#addProductModal">Añadir
+                                Producto</button>
+                            <button class="btn btn-danger btn-block" data-toggle="modal" data-target="#deleteProductModal">Eliminar
+                                Producto</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        <!-- Modal for Add Product -->
+        <div class="modal fade" id="addProductModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Añadir Producto</h5>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="supermarket">Supermercado</label>
+                                <!-- <button type="button" id="supermarket" onclick="listSupermarkets()"></button> -->
+                                <select class="form-control" id="supermarket">
+                                    <option>Costco</option>
+                                    <option>Sam's Club</option>
+                                    <option>Walmart</option>
+                                    <option>H-E-B</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="product">Producto</label>
+                                <input type="text" class="form-control" id="product">
+                            </div>
+                            <button type="button" class="btn btn-success btn-block">Agregar Producto</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            <!-- Modal for Delete Product -->
+            <div class="modal fade" id="deleteProductModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Eliminar Producto</h5>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="form-group">
+                                    <label for="supermarketDelete">Supermercado</label>
+                                    <select class="form-control" id="supermarketDelete">
+                                        <option>Costco</option>
+                                        <option>Sam's Club</option>
+                                        <option>Walmart</option>
+                                        <option>H-E-B</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="productDelete">Producto</label>
+                                    <select class="form-control" id="productDelete">
+                                                                        \<!-- <button type="button" id="product" onclick="listProducts()"></button> -->
+                                        <option>Manzana</option>
+                                        <option>Jabon</option>
+                                        <option>Jamon</option>
+                                        <option>Pan</option>
+                                    </select>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <button type="button" class="btn btn-danger btn-block">Eliminar</button>
+                                    </div>
+                                    <div class="col">
+                                        <button type="button" class="btn btn-success btn-block">Salir</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
             <!-- Modal for Side Menu -->
             <div class="modal fade" id="menuModal">
                 <div class="modal-dialog">
@@ -629,321 +597,492 @@
                     </div>
                 </div>
             </div>
-            </div>
         </div>
     </div>
-</div>
-            <div id="walmart_homepage" style="display: none;">
-                <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link text-left" href="#" onclick="showHome()">Inicio</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-left" onclick="showSupermercados()" href="#" >Supermercados</a>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-                
-                <!-- Content Container -->
-                <div class="container mt-5">
-                    <div class="row justify-content-center">
-                        <div class="col-md-6">
-                            <div class="text-center">
-                                <img src="Walmart.png" alt="Logo" class="img-fluid mb-4">
-                        </div>
-                    </div>
+    
+<div id="sams_homepage" style="display: none;">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link text-left" href="#" onclick="showHome()">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-left" onclick="showSupermercados()" href="#">Supermercados</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Content Container -->
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="text-center">
+                    <img src="Sams.png" alt="Logo" class="img-fluid mb-4">
                 </div>
-                
-                    <!-- Tables for Supermarkets -->
-                    <div class="row mt-4">
-                        <div class="col">
-                            <table class="table table-bordered">
-                                <tbody>
-                                    <tr>
-                                        <td class="text-center">Walmart</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="text-center">Lista de Productos</td>
-                                    </tr>
-                                    <tr>
-                                        <td><!-- Function to display products for Costco --></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                
-                
-                
-                
-                <!-- Floating Action Button -->
-<button class="btn btn-primary rounded-circle position-fixed" style="bottom: 20px; right: 20px;" onclick="toggleFabModal()">+</button>
-
-<!-- Modal for Floating Action Button Options -->
-<div class="modal fade" id="fabModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-body">
-                <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#addProductModal">Añadir Producto</button>
-                <button class="btn btn-danger btn-block" data-toggle="modal" data-target="#deleteProductModal">Eliminar Producto</button>
             </div>
         </div>
-    </div>
-</div>
 
-<!-- Modal for Add Product -->
-<div class="modal fade" id="addProductModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Añadir Producto</h5>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="supermarket">Supermercado</label>
-                        <select class="form-control" id="supermarket">
-                            <option>Costco</option>
-                            <option>Sam's Club</option>
-                            <option>Walmart</option>
-                            <option>H-E-B</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="product">Producto</label>
-                        <input type="text" class="form-control" id="product">
-                    </div>
-                    <button type="button" class="btn btn-success btn-block">Agregar Producto</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal for Delete Product -->
-<div class="modal fade" id="deleteProductModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Eliminar Producto</h5>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="supermarketDelete">Supermercado</label>
-                        <select class="form-control" id="supermarketDelete">
-                            <option>Costco</option>
-                            <option>Sam's Club</option>
-                            <option>Walmart</option>
-                            <option>H-E-B</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="productDelete">Producto</label>
-                        <select class="form-control" id="productDelete">
-                            <option>Product A</option>
-                            <option>Product B</option>
-                            <option>Product C</option>
-                        </select>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <button type="button" class="btn btn-danger btn-block">Eliminar</button>
-                        </div>
-                        <div class="col">
-                            <button type="button" class="btn btn-success btn-block">Salir</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
-
-                
-                <!-- Modal for Side Menu -->
-                <div class="modal fade" id="menuModal">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-body">
+        <!-- Tables for Supermarkets -->
+        <div class="row mt-4">
+            <div class="col">
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <td class="text-center">Sams</td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">Lista de Productos</td>
+                        </tr>
+                        <tr>
+                            <td>                        
                                 <ul>
-                                    <li><a href="#" onclick="showHome()">Inicio</a></li>
-                                    <li><a href="#" onclick="showSupermercados()">Supermercados</a></li>
+                                    <li>Manzana</li>
+                                    <li>Jabon</li>
+                                    <li>Jamon</li>
+                                    <li>Pan</li>
                                 </ul>
-                            </div>
-                        </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Floating Action Button -->
+        <button class="btn btn-primary rounded-circle position-fixed" style="bottom: 20px; right: 20px;"
+            onclick="toggleFabModal()">+</button>
+
+        <!-- Modal for Floating Action Button Options -->
+        <div class="modal fade" id="fabModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#addProductModal">Añadir Producto</button>
+                        <button class="btn btn-danger btn-block" data-toggle="modal" data-target="#deleteProductModal">Eliminar Producto</button>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- Modal for Add Product -->
+        <div class="modal fade" id="addProductModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Añadir Producto</h5>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="supermarket">Supermercado</label>                        
+                                <!-- <button type="button" id="supermarket" onclick="listSupermarkets()"></button> -->
+                                <select class="form-control" id="supermarket">
+                                    <option>Costco</option>
+                                    <option>Sam's Club</option>
+                                    <option>Walmart</option>
+                                    <option>H-E-B</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="product">Producto</label>
+                                <input type="text" class="form-control" id="product">
+                            </div>
+                            <button type="button" class="btn btn-success btn-block">Agregar Producto</button> 
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
 
-                <div id="heb_homepage" style="display: none;">
-                    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                            <ul class="navbar-nav">
-                                <li class="nav-item">
-                                    <a class="nav-link text-left" href="#" onclick="showHome()">Inicio</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link text-left" onclick="showSupermercados()" href="#" >Supermercados</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </nav>
-                    
-                    <!-- Content Container -->
-                    <div class="container mt-5">
-                        <div class="row justify-content-center">
-                            <div class="col-md-6">
-                                <div class="text-center">
-                                    <img src="Heb.png" alt="Logo" class="img-fluid mb-4">
+        <!-- Modal for Delete Product -->
+        <div class="modal fade" id="deleteProductModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Eliminar Producto</h5>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="supermarketDelete">Supermercado</label>
+                                <select class="form-control" id="supermarketDelete">
+                                    <option>Costco</option>
+                                    <option>Sam's Club</option>
+                                    <option>Walmart</option>
+                                    <option>H-E-B</option>
+                                </select>
                             </div>
-                        </div>
-                    </div>
-                    
-                        <!-- Tables for Supermarkets -->
-                        <div class="row mt-4">
-                            <div class="col">
-                                <table class="table table-bordered">
-                                    <tbody>
-                                        <tr>
-                                            <td class="text-center">H-E-B</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center">Lista de Productos</td>
-                                        </tr>
-                                        <tr>
-                                            <td><!-- Function to display products for Costco --></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                            <div class="form-group">
+                                <label for="productDelete">Producto</label>
+                                                                \<!-- <button type="button" id="product" onclick="listProducts()"></button> -->
+                                <select class="form-control" id="productDelete">
+                                    <option>Manzana</option>
+                                    <option>Jabon</option>
+                                    <option>Jamon</option>
+                                    <option>Pan</option>
+                                </select>
                             </div>
-                    
-                    
-                    
-<!-- Floating Action Button -->
-<button class="btn btn-primary rounded-circle position-fixed" style="bottom: 20px; right: 20px;" onclick="toggleFabModal()">+</button>
-
-<!-- Modal for Floating Action Button Options -->
-<div class="modal fade" id="fabModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-body">
-                <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#addProductModal">Añadir Producto</button>
-                <button class="btn btn-danger btn-block" data-toggle="modal" data-target="#deleteProductModal">Eliminar Producto</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal for Add Product -->
-<div class="modal fade" id="addProductModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Añadir Producto</h5>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="supermarket">Supermercado</label>
-                        <select class="form-control" id="supermarket">
-                            <option>Costco</option>
-                            <option>Sam's Club</option>
-                            <option>Walmart</option>
-                            <option>H-E-B</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="product">Producto</label>
-                        <input type="text" class="form-control" id="product">
-                    </div>
-                    <button type="button" class="btn btn-success btn-block">Agregar Producto</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal for Delete Product -->
-<div class="modal fade" id="deleteProductModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Eliminar Producto</h5>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="supermarketDelete">Supermercado</label>
-                        <select class="form-control" id="supermarketDelete">
-                            <option>Costco</option>
-                            <option>Sam's Club</option>
-                            <option>Walmart</option>
-                            <option>H-E-B</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="productDelete">Producto</label>
-                        <select class="form-control" id="productDelete">
-                            <option>Product A</option>
-                            <option>Product B</option>
-                            <option>Product C</option>
-                        </select>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <button type="button" class="btn btn-danger btn-block">Eliminar</button>
-                        </div>
-                        <div class="col">
-                            <button type="button" class="btn btn-success btn-block">Salir</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    </div>
-</div>
-                    
-                    <!-- Modal for Side Menu -->
-                    <div class="modal fade" id="menuModal">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-body">
-                                    <ul>
-                                        <li><a href="#" onclick="showHome()">Inicio</a></li>
-                                        <li><a href="#" onclick="showSupermercados()">Supermercados</a></li>
-                                    </ul>
+                            <div class="row">
+                                <div class="col">
+                                    <button type="button" class="btn btn-danger btn-block">Eliminar</button>
+                                </div>
+                                <div class="col">
+                                    <button type="button" class="btn btn-success btn-block">Salir</button>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal for Side Menu -->
+        <div class="modal fade" id="menuModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <ul>
+                            <li><a href="#" onclick="showHome()">Inicio</a></li>
+                            <li><a href="#" onclick="showSupermercados()">Supermercados</a></li>
+                        </ul>
                     </div>
-                    
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="localizacion.js"></script>
-    <script src="camera.js"></script>
-    <script src="function.js"></script>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="walmart_homepage" style="display: none;">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link text-left" href="#" onclick="showHome()">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-left" onclick="showSupermercados()" href="#">Supermercados</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Content Container -->
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="text-center">
+                    <img src="Walmart.png" alt="Logo" class="img-fluid mb-4">
+                </div>
+            </div>
+        </div>
+
+        <!-- Tables for Supermarkets -->
+        <div class="row mt-4">
+            <div class="col">
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <td class="text-center">Walmart</td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">Lista de Productos</td>
+                        </tr>
+                        <tr>
+                            <td>                        
+                                <ul>
+                                    <li>Manzana</li>
+                                    <li>Jabon</li>
+                                    <li>Jamon</li>
+                                    <li>Pan</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Floating Action Button -->
+        <button class="btn btn-primary rounded-circle position-fixed" style="bottom: 20px; right: 20px;"
+            onclick="toggleFabModal()">+</button>
+            
+        <!-- Modal for Floating Action Button Options -->
+        <div class="modal fade" id="fabModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#addProductModal">Añadir Producto</button>
+                        <button class="btn btn-danger btn-block" data-toggle="modal" data-target="#deleteProductModal">Eliminar Producto</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal for Add Product -->
+        <div class="modal fade" id="addProductModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Añadir Producto</h5>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="supermarket">Supermercado</label>
+                                    <!-- <button type="button" id="supermarket" onclick="listSupermarkets()"></button> -->
+                                <select class="form-control" id="supermarket">
+                                    <option>Costco</option>
+                                    <option>Sam's Club</option>
+                                    <option>Walmart</option>
+                                    <option>H-E-B</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="product">Producto</label>
+                                <input type="text" class="form-control" id="product">
+                            </div>
+                            <button type="button" class="btn btn-success btn-block">Agregar Producto</button> 
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal for Delete Product -->
+        <div class="modal fade" id="deleteProductModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Eliminar Producto</h5>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="supermarketDelete">Supermercado</label>
+                                <select class="form-control" id="supermarketDelete">
+                                    <option>Costco</option>
+                                    <option>Sam's Club</option>
+                                    <option>Walmart</option>
+                                    <option>H-E-B</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="productDelete">Producto</label>
+                                                                \<!-- <button type="button" id="product" onclick="listProducts()"></button> -->
+                                <select class="form-control" id="productDelete">
+                                    <option>Manzana</option>
+                                    <option>Jabon</option>
+                                    <option>Jamon</option>
+                                    <option>Pan</option>
+                                </select>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <button type="button" class="btn btn-danger btn-block">Eliminar</button>
+                                </div>
+                                <div class="col">
+                                    <button type="button" class="btn btn-success btn-block">Salir</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal for Side Menu -->
+        <div class="modal fade" id="menuModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <ul>
+                            <li><a href="#" onclick="showHome()">Inicio</a></li>
+                            <li><a href="#" onclick="showSupermercados()">Supermercados</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="heb_homepage" style="display: none;">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link text-left" href="#" onclick="showHome()">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-left" onclick="showSupermercados()" href="#">Supermercados</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Content Container -->
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="text-center">
+                    <img src="Heb.png" alt="Logo" class="img-fluid mb-4">
+                </div>
+            </div>
+        </div>
+
+        <!-- Tables for Supermarkets -->
+        <div class="row mt-4">
+            <div class="col">
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <td class="text-center">H-E-B</td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">Lista de Productos</td>
+                        </tr>
+                        <tr>
+                            <td>                        
+                                <ul>
+                                    <li>Manzana</li>
+                                    <li>Jabon</li>
+                                    <li>Jamon</li>
+                                    <li>Pan</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Floating Action Button -->
+        <button class="btn btn-primary rounded-circle position-fixed" style="bottom: 20px; right: 20px;"
+            onclick="toggleFabModal()">+</button>
+        <!-- Modal for Floating Action Button Options -->
+        <div class="modal fade" id="fabModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#addProductModal">Añadir Producto</button>
+                        <button class="btn btn-danger btn-block" data-toggle="modal" data-target="#deleteProductModal">Eliminar Producto</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal for Add Product -->
+        <div class="modal fade" id="addProductModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Añadir Producto</h5>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="supermarket">Supermercado</label>
+                                <!-- <button type="button" id="supermarket" onclick="listSupermarkets()"></button> -->
+                                <select class="form-control" id="supermarket">
+                                    <option>Costco</option>
+                                    <option>Sam's Club</option>
+                                    <option>Walmart</option>
+                                    <option>H-E-B</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="product">Producto</label>
+                                <input type="text" class="form-control" id="product">
+                            </div>
+                            <button type="button" class="btn btn-success btn-block">Agregar Producto</button> 
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal for Delete Product -->
+        <div class="modal fade" id="deleteProductModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Eliminar Producto</h5>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="supermarketDelete">Supermercado</label>
+                                <select class="form-control" id="supermarketDelete">
+                                    <option>Costco</option>
+                                    <option>Sam's Club</option>
+                                    <option>Walmart</option>
+                                    <option>H-E-B</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="productDelete">Producto</label>
+                                                                \<!-- <button type="button" id="product" onclick="listProducts()"></button> -->
+                                <select class="form-control" id="productDelete">
+                                    <option>Manzana</option>
+                                    <option>Jabon</option>
+                                    <option>Jamon</option>
+                                    <option>Pan</option>
+                                </select>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <button type="button" class="btn btn-danger btn-block">Eliminar</button>
+                                </div>
+                                <div class="col">
+                                    <button type="button" class="btn btn-success btn-block">Salir</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal for Side Menu -->
+        <div class="modal fade" id="menuModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <ul>
+                            <li><a href="#" onclick="showHome()">Inicio</a></li>
+                            <li><a href="#" onclick="showSupermercados()">Supermercados</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="function.js"></script>
+
 </body>
 </html>
